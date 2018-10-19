@@ -5,6 +5,9 @@ import { Router, Route, Redirect } from 'react-router-dom'
 import history from '../utils/history'
 import qs from 'query-string'
 
+// DOCUSS STYLES
+import './style.scss'
+
 // Includes
 import MainMenu from './includes/MainMenu'
 
@@ -21,32 +24,83 @@ import Page from './pages/Page'
 import ScrollToTop from './components/ScrollToTop'
 
 class App extends Component {
-  componentDidMount () {
+  constructor() {
+    super()
+    this.state = {
+      dcsShowRight: false,
+      dcsSel: true
+    }
+  }
+
+  componentDidMount() {
     setTimeout(() => {
       document.querySelector('#root').classList.toggle('show')
     }, 100) // add a fading effect on the inital loading
   }
 
-  render () {
-    return (
-      <Router history={history}>
-        <Fragment>
-          <MainMenu />
+  render() {
+    let dcsClass = ''
+    if (this.state.dcsShowRight) {
+      dcsClass += 'dcs-show-right '
+    }
+    if (this.state.dcsSel) {
+      dcsClass += 'dcs-sel '
+    }
 
-          <ScrollToTop>
-            <Route exact path='/(home)?' component={Home} />
-            <Route exact path='/about' component={About} />
-            <Route path='/map' component={Map_} />
-            <Route path='*' render={this.renderNewEvent} />
-            <Route exact path='/thank-you' component={CongratsModal} />
-            <Route exact path='/page/:id' component={Page} />
-            <Authentication />
-          </ScrollToTop>
-        </Fragment>
-      </Router>
+    return (
+      // DOCUSS
+      <div id="dcs-root" className={dcsClass}>
+        <div id="dcs-ghost">
+          <div className="dcs-ghost-splitbar" />
+        </div>
+
+        <div id="dcs-left">
+          <Router history={history}>
+            <Fragment>
+              <MainMenu />
+
+              <ScrollToTop>
+                <Route exact path='/(home)?' component={Home} />
+                <Route exact path='/about' component={About} />
+                <Route path='/map' component={Map_} />
+                <Route path='*' render={this.renderNewEvent} />
+                <Route exact path='/thank-you' component={CongratsModal} />
+                <Route exact path='/page/:id' component={Page} />
+                <Authentication />
+              </ScrollToTop>
+            </Fragment>
+          </Router>
+        </div>
+        <div id="dcs-splitbar">
+          <div id="dcs-logo">
+            <img src="/images/dcs-logo.png" />
+          </div>
+          <div style={{ flex: '1 0 0' }} />
+          <div id="dcs-splitbar-btn" onClick={this.onDcsSplitbarClick}>
+            <div style={{ flex: '1 0 0' }} />
+            <div id="dcs-splitbar-btn-text">&gt;</div>
+            <div style={{ flex: '1 0 0' }} />
+          </div>
+          <div style={{ flex: '1 0 0' }} />
+        </div>
+
+        <iframe
+          id="dcs-right"
+          width="0"
+          frameBorder="0"
+          style={{ minWidth: 0 }}
+          src="https://discuss.focallocal.org/"
+        />
+      </div>
     )
   }
 
+  onDcsSplitbarClick = () => {
+    //const ghost = document.getElementById('dcs-ghost')
+    //ghost.style.display = 'block'
+    this.setState({ dcsShowRight: !this.state.dcsShowRight })
+  }
+  
   renderNewEvent = ({ location, history }) => {
     const { new: new_, edit } = qs.parse(location.search)
     const isOpen = Boolean(new_ === '1' || (edit === '1' && window.__editData))
