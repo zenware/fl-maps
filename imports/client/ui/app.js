@@ -24,7 +24,7 @@ import Page from './pages/Page'
 import ScrollToTop from './components/ScrollToTop'
 
 class App extends Component {
-  constructor() {
+  constructor () {
     super()
     this.state = {
       dcsShowRight: false,
@@ -32,13 +32,13 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     setTimeout(() => {
       document.querySelector('#root').classList.toggle('show')
     }, 100) // add a fading effect on the inital loading
   }
 
-  render() {
+  render () {
     let dcsClass = ''
     if (this.state.dcsShowRight) {
       dcsClass += 'dcs-show-right '
@@ -65,8 +65,8 @@ class App extends Component {
                 <Route path='/map' component={Map_} />
                 <Route path='*' render={this.renderNewEvent} />
                 <Route exact path='/thank-you' component={CongratsModal} />
-                {/* 
-                <Route exact path='/page/:id' component={Page} /> 
+                {/*
+                <Route exact path='/page/:id' component={Page} />
                 REPLACED BY THE FOLLOWING LINE TO PASS THE dcsSelect FUNCTION
                 AS A PROP. IS THERE A BETTER WAY?
                 */}
@@ -108,15 +108,17 @@ class App extends Component {
   }
 
   onDcsSplitbarClick = () => {
-    //const ghost = document.getElementById('dcs-ghost')
-    //ghost.style.display = 'block'
+    console.log(this.props.history)
     this.setState({ dcsShowRight: !this.state.dcsShowRight })
   }
 
-  dcsSelect(select) {
+  dcsSelect (select) {
+    console.log(select)
+    // const dcState = this.props.
     this.setState({ dcsShowRight: select, dcsSel: select })
   }
-  
+
+
   renderNewEvent = ({ location, history }) => {
     const { new: new_, edit } = qs.parse(location.search)
     const isOpen = Boolean(new_ === '1' || (edit === '1' && window.__editData))

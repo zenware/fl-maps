@@ -10,7 +10,8 @@ import PageLoader from '/imports/client/ui/components/PageLoader'
 import EditPage from './Edit'
 import AttendingButton from './AttendingButton'
 import './style.scss'
-import {Helmet} from "react-helmet";
+import { Helmet } from 'react-helmet'
+import * as qs from 'query-string'
 
 class Page extends Component {
   constructor (props) {
@@ -24,7 +25,11 @@ class Page extends Component {
 
   componentDidMount () {
     const { data } = this.state
-
+    const { dc } = qs.parse(this.props.location.search)
+    this.setState({
+      dcsSel: dc
+    })
+    this.props.dcsSelect(dc)
     if (!data) {
       this.getEventData()
     } else {
@@ -107,16 +112,21 @@ class Page extends Component {
           <Row>
 
             <Col xs={7} className='left'>
-              <div style={{ margin: '20px 0' }}><b>Photos</b>&nbsp;<span class="dcs-icons"><img src="/images/dcs-balloon.png" style={{ cursor: 'pointer' }} onClick={e => this.dcsClick('photos', e)} /></span></div>
-              <div style={{ margin: '20px 0' }}><b>Videos</b>&nbsp;<span class="dcs-icons"><img src="/images/dcs-balloon.png" style={{ cursor: 'pointer' }} onClick={e => this.dcsClick('videos', e)} /></span></div>
+              <div style={{ margin: '20px 0' }}><b>Photos</b>&nbsp;<span className="dcs-icons">
+                <img src="/images/dcs-balloon.png" 
+                  style={{ cursor: 'pointer' }} 
+                    onClick={e => this.dcsClick('photos', e)} />
+                  </span>
+                </div>
+              <div style={{ margin: '20px 0' }}><b>Videos</b>&nbsp;<span className="dcs-icons"><img src="/images/dcs-balloon.png" style={{ cursor: 'pointer' }} onClick={e => this.dcsClick('videos', e)} /></span></div>
 
               <div className='description'>
                 <SectionTitle title='About' />
                 {description}
               </div>
 
-              <div style={{ margin: '20px 0' }}><b>Wall</b>&nbsp;<span class="dcs-icons"><img src="/images/dcs-balloon.png" style={{ cursor: 'pointer' }} onClick={e => this.dcsClick('wall', e)} /></span></div>
-              <div style={{ margin: '20px 0' }}><b>Experiences</b>&nbsp;<span class="dcs-icons"><img src="/images/dcs-balloon.png" style={{ cursor: 'pointer' }} onClick={e => this.dcsClick('experiences', e)} /></span></div>
+              <div style={{ margin: '20px 0' }}><b>Wall</b>&nbsp;<span className="dcs-icons"><img src="/images/dcs-balloon.png" style={{ cursor: 'pointer' }} onClick={e => this.dcsClick('wall', e)} /></span></div>
+              <div style={{ margin: '20px 0' }}><b>Experiences</b>&nbsp;<span className="dcs-icons"><img src="/images/dcs-balloon.png" style={{ cursor: 'pointer' }} onClick={e => this.dcsClick('experiences', e)} /></span></div>
             </Col>
 
             <Col xs={4} className='right'>
@@ -153,8 +163,8 @@ class Page extends Component {
         <div id="coral_talk_stream"></div>
         <Helmet>
           {/* The embed web address will need updated depending on environment */}
-          {/* Package.json port will need updated if you leave embed at 3000*/}
-          <script src="https://talk.focallocal.org/static/embed.js" async onload="
+          {/* Package.json port will need updated if you leave embed at 3000 */}
+          <script src="https://talk.focallocal.org/static/embed.js" async onLoad="
             Coral.Talk.render(document.getElementById('coral_talk_stream'), {
               talk: 'https://talk.focallocal.org/'
             });
@@ -177,17 +187,18 @@ class Page extends Component {
   }
 
   // DOCUSS
-  dcsClick(title, e) {
+  dcsClick (title, e) {
     if (title) {
       // Update app layout
       this.props.dcsSelect(true)
-
+      this.props.history.push('/page/GezXrXnpPcqj3biAs?dc=true')
       // Action
       console.log('*********** Docuss action for', title)
       console.log('*********** Also, need to update the address bar with the page state')
     } else {
       // Update app layout
       this.props.dcsSelect(false)
+      this.props.history.push('/page/GezXrXnpPcqj3biAs')
     }
     e.stopPropagation()
   }
