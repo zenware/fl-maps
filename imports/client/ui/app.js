@@ -108,12 +108,10 @@ class App extends Component {
   }
 
   onDcsSplitbarClick = () => {
-    console.log(this.props.history)
     this.setState({ dcsShowRight: !this.state.dcsShowRight })
   }
 
   dcsSelect (select) {
-    console.log(select)
     // const dcState = this.props.
     this.setState({ dcsShowRight: select, dcsSel: select })
   }

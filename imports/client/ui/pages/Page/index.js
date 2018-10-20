@@ -98,7 +98,6 @@ class Page extends Component {
     if (isLoggedIn) {
       isAuthor = user._id === organiser._id
     }
-
     return (
       <div id='page' onClick={e => this.dcsClick(null, e)}>
         <div className='header'>
@@ -188,14 +187,12 @@ class Page extends Component {
 
   // DOCUSS
   dcsClick (title, e) {
+    const { id } = this.state
     if (title) {
       // Update app layout
       this.props.dcsSelect(true)
-      this.props.history.push('/page/GezXrXnpPcqj3biAs?dc=true')
-      // Action
-      console.log('*********** Docuss action for', title)
-      console.log('*********** Also, need to update the address bar with the page state')
-    } else {
+      this.props.history.push(`/page/${id}?dc=true`)
+        } else {
       // Update app layout
       this.props.dcsSelect(false)
       this.props.history.push('/page/GezXrXnpPcqj3biAs')
