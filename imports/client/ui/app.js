@@ -65,7 +65,19 @@ class App extends Component {
                 <Route path='/map' component={Map_} />
                 <Route path='*' render={this.renderNewEvent} />
                 <Route exact path='/thank-you' component={CongratsModal} />
-                <Route exact path='/page/:id' component={Page} />
+                {/* 
+                <Route exact path='/page/:id' component={Page} /> 
+                REPLACED BY THE FOLLOWING LINE TO PASS THE dcsSelect FUNCTION
+                AS A PROP. IS THERE A BETTER WAY?
+                */}
+                <Route
+                  exact
+                  path="/page/:id"
+                  render={props => (
+                    <Page {...props} dcsSelect={this.dcsSelect.bind(this)} />
+                  )}
+                />
+
                 <Authentication />
               </ScrollToTop>
             </Fragment>
@@ -99,6 +111,10 @@ class App extends Component {
     //const ghost = document.getElementById('dcs-ghost')
     //ghost.style.display = 'block'
     this.setState({ dcsShowRight: !this.state.dcsShowRight })
+  }
+
+  dcsSelect(select) {
+    this.setState({ dcsShowRight: select, dcsSel: select })
   }
   
   renderNewEvent = ({ location, history }) => {

@@ -95,7 +95,7 @@ class Page extends Component {
     }
 
     return (
-      <div id='page'>
+      <div id='page' onClick={e => this.dcsClick(null, e)}>
         <div className='header'>
           <div className='title-wrapper'>
             <div className='title'>{name}</div>
@@ -107,10 +107,16 @@ class Page extends Component {
           <Row>
 
             <Col xs={7} className='left'>
+              <div style={{ margin: '20px 0' }}><b>Photos</b>&nbsp;<span class="dcs-icons"><img src="/images/dcs-balloon.png" style={{ cursor: 'pointer' }} onClick={e => this.dcsClick('photos', e)} /></span></div>
+              <div style={{ margin: '20px 0' }}><b>Videos</b>&nbsp;<span class="dcs-icons"><img src="/images/dcs-balloon.png" style={{ cursor: 'pointer' }} onClick={e => this.dcsClick('videos', e)} /></span></div>
+
               <div className='description'>
                 <SectionTitle title='About' />
                 {description}
               </div>
+
+              <div style={{ margin: '20px 0' }}><b>Wall</b>&nbsp;<span class="dcs-icons"><img src="/images/dcs-balloon.png" style={{ cursor: 'pointer' }} onClick={e => this.dcsClick('wall', e)} /></span></div>
+              <div style={{ margin: '20px 0' }}><b>Experiences</b>&nbsp;<span class="dcs-icons"><img src="/images/dcs-balloon.png" style={{ cursor: 'pointer' }} onClick={e => this.dcsClick('experiences', e)} /></span></div>
             </Col>
 
             <Col xs={4} className='right'>
@@ -168,6 +174,22 @@ class Page extends Component {
         this.setState({ data: res, loaded: true })
       }
     })
+  }
+
+  // DOCUSS
+  dcsClick(title, e) {
+    if (title) {
+      // Update app layout
+      this.props.dcsSelect(true)
+
+      // Action
+      console.log('*********** Docuss action for', title)
+      console.log('*********** Also, need to update the address bar with the page state')
+    } else {
+      // Update app layout
+      this.props.dcsSelect(false)
+    }
+    e.stopPropagation()
   }
 }
 
