@@ -21,6 +21,7 @@ class FirstStep extends Component {
   }
   render () {
     const RadioButton = this.RadioButton
+
     return (
       <div id='first-step'>
         <div id='radios'>
