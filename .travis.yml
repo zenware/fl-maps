@@ -21,8 +21,8 @@ before_install:
 
 branches:
   only:
-    - new-master
-    - street-sleeper
+    - develop
+    - master
 
 
 script:
