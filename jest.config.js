@@ -1,4 +1,6 @@
 module.exports = {
+  "verbose": true,
+  "testURL": "http://localhost/",
   setupFiles: ['<rootDir>/tests/unit-tests/testsSetup.js'],
   moduleNameMapper: {
     '^meteor/(.*)': '<rootDir>/tests/unit-tests/meteorMocks/$1',
