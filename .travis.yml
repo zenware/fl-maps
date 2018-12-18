@@ -1,26 +1,26 @@
-language: node_js
+dist: stretch
 sudo: required
-node_js:
-  - '8.11.1'
-  - '8.14.0'
 
-cache:
-  directories:
-    - $HOME/.meteor
-
-before_cache:
-  - rm -f $HOME/.meteor/log/*.log
+services: 
+  - docker
 
 before_install:
-  # Remove cache if the project is upgraded to a newer version of meteor
-  - export PATH="$HOME/.meteor:$PATH"
-  - npm install -g mup
-  - curl https://install.meteor.com/?release=1.6.1.4 | /bin/sh
+  - sudo curl -fsSL https://get.docker.com/ | sh
+  - if [ -e /usr/local/bin/docker-compose ]; then sudo rm /usr/local/bin/docker-compose; fi
+  - sudo curl -L https://github.com/docker/compose/releases/download/${TRAVIS_DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - sudo chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - sudo docker-compose build --no-cache --force-rm
+  - sudo docker-compose up -d fl-maps-db
+  - sudo docker-compose up -d fl-maps
 
-branches:
-  only:
-    - develop
-    - master
+language: node_js
+
+node_js:
+  - "8.14.0"
+
+install:
+  - "npm install"
 
 script:
-  - npm test
+  - "npm test"
