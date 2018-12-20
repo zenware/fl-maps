@@ -4,6 +4,9 @@ sudo: required
 services: 
   - docker
 
+env:
+  TRAVIS_DOCKER_COMPOSE_VERSION: 1.17.0
+
 before_install:
   - sudo curl -fsSL https://get.docker.com/ | sh
   - if [ -e /usr/local/bin/docker-compose ]; then sudo rm /usr/local/bin/docker-compose; fi
