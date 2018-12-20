@@ -1,0 +1,47 @@
+version: '2'
+
+# Note: Do not add single quotes '' to variables. Having spaces still works without quotes where required.
+# 1) Edit settings
+# 2) docker-compose up -d
+
+services:
+  fl-maps-db:
+    image: mongo:3.2.21
+    container_name: fl-maps-db
+    restart: always
+    command: mongod --smallfiles --oplogSize 128
+    networks:
+      - fl-maps-tier
+    expose:
+      - 27017
+    volumes:
+      - fl-maps-db:/data/db
+      - fl-maps-db-dump:/dump
+
+  fl-maps:
+    image: zenware/fl-maps:latest
+    container_name: fl-maps-app
+    restart: always
+    networks:
+      - fl-maps-tier
+    ports:
+      # Docker outsideport:insideport
+      - 80:3000
+    environment:
+      - MONGO_URL=mongodb://fl-maps-db:27017/fl-maps
+      - ROOT_URL=http://localhost
+
+      - WITH_API=true
+      - BROWSER_POLICY_ENABLED=true
+    depends_on:
+      - fl-maps-db
+
+volumes:
+  fl-maps-db:
+    driver: local
+  fl-maps-db-dump:
+    driver: local
+
+networks:
+  fl-maps-tier:
+    driver: bridge
