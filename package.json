@@ -10,7 +10,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.42",
     "bcrypt": "^2.0.1",
-    "bootstrap": "^4.1.1",
+    "bootstrap": "^4.3.0",
     "disqus-react": "^1.0.5",
     "faker": "^4.1.0",
     "haversine": "^1.1.0",
