@@ -16,7 +16,7 @@
     "haversine": "^1.1.0",
     "haversine-offset": "^1.0.0",
     "loaders.css": "^0.1.2",
-    "meteor-node-stubs": "^0.3.2",
+    "meteor-node-stubs": "^1.0.1",
     "nprogress": "^0.2.0",
     "query-string": "^6.1.0",
     "react": "^16.3.2",
