@@ -31,7 +31,7 @@
     "react-router-dom": "^4.2.2",
     "react-select": "^2.0.0-beta.2",
     "react-swipeable": "^4.3.0",
-    "reactstrap": "^6.0.1",
+    "reactstrap": "^8.7.1",
     "simpl-schema": "^1.5.0",
     "uniforms": "^1.24.3"
   },
